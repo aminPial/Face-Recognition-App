@@ -16,12 +16,18 @@ run
 module in Windows**. After you install please follow the documentation
 given in this awesome repository: https://github.com/ageitgey/face_recognition and use it.
 
-For ease of use there is already a code for face recognition from video input.
+**For ease of use there is already a code for face recognition from video input.**
 Both faster and slower method with low and high accuracy. If you want to test it
 out please follow below documentation.
 
-## 
-
+## Video Input face Recognition Doc 
+Todo:
+1. Put your **face image** with naming image with your name in the database folder. e.g:<code>AminPial.jpg
+(There is an image already in the database that is detecting the face in the video which is shown in GIF)</code>
+2. Then run <code>python faster_recognition_low_acc.py</code> or <code>
+python slower_recognition_high_acc.py</code>
+3. The code will show something like the following GIF:
+![Demo](AminPial.gif)
 
 ## License
 

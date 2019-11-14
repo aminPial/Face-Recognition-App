@@ -1,24 +1,28 @@
 import face_recognition
-import cv2
+import cv2, os
 
 video_capture = cv2.VideoCapture(0)
 
 # add more face if has to be recognized in here
+image_list = os.listdir('./database')
+print("Avaiable Person Images: ", image_list)
 
+# face encodings of images will be stored here | 1st face encoding will be assigned to first element in
+# known_face_names array
+known_face_encodings = []
+# names of the user will be appended her
+known_face_names = []
 
 # Load a sample picture and learn how to recognize it.
-obama_image = face_recognition.load_image_file("database/test.jpg")
-obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
-
-# Create arrays of known face encodings and their names
-known_face_encodings = [
-    obama_face_encoding,
-]
-
-# Add names in here
-known_face_names = [
-    "Amin Pial",
-]
+for image in image_list:
+    loaded_image = face_recognition.load_image_file("database/{}".format(image))
+    face_encoding = face_recognition.face_encodings(loaded_image)[0]
+    # adding face names in known_face_names array
+    person_name = image.split('.')[0]  # cut the image format string
+    known_face_names.append(person_name)
+    # adding the face encoding in known_face_encodings
+    known_face_encodings.append(face_encoding)
+print(known_face_names)
 
 # Initialize some variables
 face_locations = []

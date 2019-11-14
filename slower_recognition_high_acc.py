@@ -1,5 +1,5 @@
 import face_recognition
-import cv2
+import cv2, os
 
 
 # This is a super simple (but slow) example of running face recognition on live video from your webcam.
@@ -44,25 +44,27 @@ def image_resize(image, width=None, height=None, inter=cv2.INTER_AREA):
 # Get a reference to webcam #0 (the default one)
 video_capture = cv2.VideoCapture(0)
 
+
+# add more face if has to be recognized in here
+image_list = os.listdir('./database')
+print("Avaiable Person Images: ", image_list)
+
+# face encodings of images will be stored here | 1st face encoding will be assigned to first element in
+# known_face_names array
+known_face_encodings = []
+# names of the user will be appended her
+known_face_names = []
+
 # Load a sample picture and learn how to recognize it.
-obama_image = face_recognition.load_image_file("database/obama.jpg")
-# obama_image=image_resize(obama_image)
-obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
-
-# Load a second sample picture and learn how to recognize it.
-biden_image = face_recognition.load_image_file("database/obama.jpg")
-# biden_image
-biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
-
-# Create arrays of known face encodings and their names
-known_face_encodings = [
-    obama_face_encoding,
-    biden_face_encoding
-]
-known_face_names = [
-    "Barack Obama",
-    "Joe Biden"
-]
+for image in image_list:
+    loaded_image = face_recognition.load_image_file("database/{}".format(image))
+    face_encoding = face_recognition.face_encodings(loaded_image)[0]
+    # adding face names in known_face_names array
+    person_name = image.split('.')[0]  # cut the image format string
+    known_face_names.append(person_name)
+    # adding the face encoding in known_face_encodings
+    known_face_encodings.append(face_encoding)
+print(known_face_names)
 
 while True:
     # Grab a single frame of video
